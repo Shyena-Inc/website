@@ -28,11 +28,11 @@ export function ServiceCard({
   return (
     <CardWrapper>
       <Card className={cn(
-        "glass-card hover:border-cyber-purple/30 transition-all duration-300 overflow-hidden group h-full", 
+        "glass-card hover:border-cyber-purple/50 hover:shadow-[0_0_15px_rgba(155,135,245,0.3)] transition-all duration-300 overflow-hidden group h-full", 
         className
       )}>
         <div className="p-6 relative h-full flex flex-col">
-          <div className="mb-4 text-cyber-purple bg-cyber-purple/10 h-12 w-12 rounded-lg flex items-center justify-center">
+          <div className="mb-4 text-cyber-purple bg-cyber-purple/10 h-12 w-12 rounded-lg flex items-center justify-center group-hover:bg-cyber-purple/20 transition-colors">
             {icon}
           </div>
           <h3 className="text-xl font-medium text-white mb-2 group-hover:text-cyber-purple transition-colors">
