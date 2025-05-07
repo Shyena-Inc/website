@@ -11,9 +11,7 @@ import Platform from "./pages/Platform";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Careers from "./pages/Careers";
-import Contact from "./pages/Contact";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Contact from "./pages/Contact"; 
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import CookiePolicy from "./pages/CookiePolicy";
@@ -35,9 +33,7 @@ const App = () => (
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:id" element={<BlogPost />} />
           <Route path="/careers" element={<Careers />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/contact" element={<Contact />} /> 
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/cookie-policy" element={<CookiePolicy />} />

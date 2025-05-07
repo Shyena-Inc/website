@@ -1,8 +1,6 @@
-
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Shield, ChevronDown } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Menu, X, Shield, ChevronDown } from 'lucide-react'; 
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,6 +16,17 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (isMenuOpen && !(event.target as HTMLElement).closest('.mobile-menu')) {
+        closeMenu();
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, [isMenuOpen]);
+
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -31,11 +40,10 @@ const Navbar = () => {
     { name: 'Contact', path: '/contact' },
   ];
 
-  const isActive = (path: string) => {
-    if (path === '/' && location.pathname === '/') return true;
-    if (path !== '/' && location.pathname.startsWith(path)) return true;
-    return false;
-  };
+  const isActive = useCallback(
+    (path: string) => location.pathname === path || location.pathname.startsWith(path),
+    [location.pathname]
+  );
 
   return (
     <header
@@ -45,7 +53,7 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
         <Link to="/" className="flex items-center space-x-2" onClick={closeMenu}>
-          <Shield className="h-8 w-8 text-cyber-purple" />
+          <Shield className="h-8 w-8 text-cyber-purple" aria-label="Shyena Security Logo" />
           <span className="text-xl font-bold text-white">Shyena Security</span>
         </Link>
 
@@ -58,18 +66,11 @@ const Navbar = () => {
               className={`text-sm font-medium transition-colors hover:text-cyber-purple ${
                 isActive(item.path) ? 'text-cyber-purple' : 'text-white/80'
               }`}
+              aria-current={isActive(item.path) ? 'page' : undefined}
             >
               {item.name}
             </Link>
-          ))}
-          <div className="ml-4 flex space-x-2">
-            <Button variant="outline" size="sm" asChild>
-              <Link to="/login">Login</Link>
-            </Button>
-            <Button size="sm" asChild>
-              <Link to="/register">Register</Link>
-            </Button>
-          </div>
+          ))} 
         </nav>
 
         {/* Mobile Menu Button */}
@@ -83,7 +84,7 @@ const Navbar = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="lg:hidden absolute top-full left-0 right-0 neo-blur p-4">
+          <div className="lg:hidden absolute top-full left-0 right-0 neo-blur p-4 mobile-menu overflow-y-auto max-h-[80vh]">
             <nav className="flex flex-col space-y-4">
               {navItems.map((item) => (
                 <Link
@@ -92,19 +93,12 @@ const Navbar = () => {
                   className={`text-sm font-medium transition-colors hover:text-cyber-purple ${
                     isActive(item.path) ? 'text-cyber-purple' : 'text-white/80'
                   }`}
+                  aria-current={isActive(item.path) ? 'page' : undefined}
                   onClick={closeMenu}
                 >
                   {item.name}
                 </Link>
-              ))}
-              <div className="flex flex-col space-y-2 pt-2">
-                <Button variant="outline" size="sm" asChild>
-                  <Link to="/login" onClick={closeMenu}>Login</Link>
-                </Button>
-                <Button size="sm" asChild>
-                  <Link to="/register" onClick={closeMenu}>Register</Link>
-                </Button>
-              </div>
+              ))} 
             </nav>
           </div>
         )}

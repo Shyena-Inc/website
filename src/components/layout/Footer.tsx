@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Shield, Github, Linkedin, Mail, Twitter } from 'lucide-react';
 
@@ -30,7 +29,11 @@ const Footer = () => {
                 <Twitter size={20} />
                 <span className="sr-only">Twitter</span>
               </a>
-              <a href="mailto:info@shyenasecurity.com" className="text-white/70 hover:text-cyber-purple transition-colors">
+              <a
+                href="#"
+                onClick={() => window.location.href = 'mailto:info@shyenasecurity.com'}
+                className="text-white/70 hover:text-cyber-purple transition-colors"
+              >
                 <Mail size={20} />
                 <span className="sr-only">Email</span>
               </a>
